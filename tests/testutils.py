@@ -141,7 +141,9 @@ def pdftoxml(filename, output):
 
     root = fromstring(stdout)
     indent(root)
-    open(output, 'w').write(tostring(root))
+    with open(output, 'w') as f:
+        s = tostring(root)
+        f.write(s.decode('utf-8'))
 
 
 class BoletoTestCase(unittest.TestCase):
