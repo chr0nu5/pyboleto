@@ -10,6 +10,7 @@
 
 """
 import os
+import sys
 
 from reportlab.graphics.barcode.common import I2of5
 from reportlab.lib.colors import black
@@ -17,6 +18,9 @@ from reportlab.lib.pagesizes import A4, landscape as pagesize_landscape
 from reportlab.lib.units import mm, cm
 from reportlab.pdfbase.pdfmetrics import stringWidth
 from reportlab.pdfgen import canvas
+
+if sys.version_info >= (3,):
+    unicode = str
 
 
 class BoletoPDF(object):
