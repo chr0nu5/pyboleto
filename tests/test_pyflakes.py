@@ -93,7 +93,10 @@ class TestPyflakes(SourceTest, unittest.TestCase):
         msgs = []
         result = 0
         try:
-            fd = open(filename, 'U')
+            if sys.version_info >= (3,):
+                fd = open(filename)
+            else:
+                fd = open(filename, 'U')
             try:
                 result = self._check(fd.read(), filename, warnings)
             finally:
