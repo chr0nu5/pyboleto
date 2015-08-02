@@ -32,20 +32,10 @@ import sys
 import unittest
 
 from .testutils import SourceTest
-from .compat import skipIf
+
+from pyflakes import checker
 
 
-try:
-    from pyflakes import checker
-except ImportError as err:
-    if sys.version_info >= (3,):
-        pass  # Pyflakes doesn't support Python3
-    else:
-        raise(err)
-
-
-@skipIf(sys.version_info >= (3,),
-        "Pyflakes unavailable on this version")
 class TestPyflakes(SourceTest, unittest.TestCase):
     def setUp(self):
         pass
