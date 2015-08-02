@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # vi:si:et:sw=4:sts=4:ts=4
+from __future__ import print_function
 
 ##
 ## Copyright (C) 2011-2012 Async Open Source <http://www.async.com.br>
@@ -63,24 +64,22 @@ class TestPyflakes(SourceTest, unittest.TestCase):
                 # Avoid using msg, since for the only known case, it contains a
                 # bogus message that claims the encoding the file declared was
                 # unknown.
-                print >> sys.stderr, "%s: problem decoding source" % (
-                    filename,
-                )
+                print("%s: problem decoding source" % (filename), file=sys.stderr)
             else:
                 line = text.splitlines()[-1]
 
                 if offset is not None:
                     offset = offset - (len(text) - len(line))
 
-                print >> sys.stderr, '%s:%d: %s' % (filename, lineno, msg)
-                print >> sys.stderr, line
+                print('%s:%d: %s' % (filename, lineno, msg), file=sys.stderr)
+                print(line, file=sys.stderr)
 
                 if offset is not None:
-                    print >> sys.stderr, " " * offset, "^"
+                    print(" " * offset, "^", file=sys.stderr)
 
             return 1
         except UnicodeError as msg:
-            print >> sys.stderr, 'encoding error at %r: %s' % (filename, msg)
+            print('encoding error at %r: %s' % (filename, msg), file=sys.stderr)
             return 1
         else:
             # Okay, it's syntactically valid.
@@ -100,13 +99,13 @@ class TestPyflakes(SourceTest, unittest.TestCase):
             finally:
                 fd.close()
         except IOError as msg:
-            print >> sys.stderr, "%s: %s" % (filename, msg.args[1])
+            print("%s: %s" % (filename, msg.args[1]), file=sys.stderr)
             result = 1
 
         warnings.sort(key=lambda w: w.lineno)
         for warning in warnings:
             msg = str(warning).replace(root, '')
-            print msg
+            print(msg)
             msgs.append(msg)
         if result:
             raise AssertionError(
