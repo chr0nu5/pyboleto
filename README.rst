@@ -115,8 +115,10 @@ Executing unittests
 You need either setuptools or distribute in order to execute the tests. Chances are you already have one or another. You also need `pdftohtml`_.::
 
     $ cd pyboleto
-    $ python setup.py test
+    $ python2 setup.py test
+	$ python3 -W ignore:ResourceWarning setup.py test
 
+Resource warning is default since Python 3.4, and some libraries have a lot of warnings because of this.
 
 .. _pdftohtml: http://poppler.freedesktop.org/
 
