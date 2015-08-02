@@ -10,8 +10,12 @@
     :license: BSD, see LICENSE for more details.
 
 """
+import sys
 import datetime
 from decimal import Decimal
+
+if sys.version_info >= (3,):
+    basestring = (str, bytes)
 
 
 class BoletoException(Exception):
@@ -307,7 +311,7 @@ class BoletoData(object):
         if type(val) is Decimal:
             self._valor = val
         else:
-            self._valor = Decimal(str(val), 2)
+            self._valor = Decimal(str(val))
     valor = property(_get_valor, _set_valor)
     """Valor convertido para :class:`Decimal`.
 
@@ -325,7 +329,7 @@ class BoletoData(object):
         if type(val) is Decimal:
             self._valor_documento = val
         else:
-            self._valor_documento = Decimal(str(val), 2)
+            self._valor_documento = Decimal(str(val))
     valor_documento = property(_get_valor_documento, _set_valor_documento)
     """Valor do Documento convertido para :class:`Decimal`.
 

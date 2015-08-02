@@ -21,25 +21,21 @@ def get_version(package):
 
 extra = {}
 if sys.version_info >= (3,):
-    extra['use_2to3'] = True
+    extra['use_2to3'] = False
     #extra['convert_2to3_doctests'] = ['src/your/module/README.txt']
     #extra['use_2to3_fixers'] = ['your.fixers']
     extra['install_requires'] = [
         'distribute',
     ]
-    extra['tests_require'] = [
-        'pep8>=0.6.1',
-        'pep8<1.3',
-    ],
-else:
-    extra['install_requires'] = [
-        'reportlab>=2.5',
-    ]
-    extra['tests_require'] = [
-        'pep8>=0.6.1',
-        'pep8<1.3',
-        'pyflakes>=0.5.0',
-    ]
+
+extra['install_requires'] = [
+    'reportlab>=3.2',
+]
+extra['tests_require'] = [
+    'pep8>=0.6.1',
+    'pep8<1.3',
+    'pyflakes>=0.5.0',
+]
 
 setup(
     name='pyboleto',

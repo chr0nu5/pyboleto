@@ -5,7 +5,6 @@ import difflib
 import fnmatch
 import os
 import re
-import sys
 import subprocess
 import tempfile
 import unittest
@@ -14,16 +13,7 @@ from xml.etree.ElementTree import fromstring, tostring
 
 import pyboleto
 
-from .compat import skipIf
-
-
-try:
-    from pyboleto.pdf import BoletoPDF
-except ImportError as err:
-    if sys.version_info >= (3,):
-        pass  # Reportlab doesn;t support Python3
-    else:
-        raise(err)
+from pyboleto.pdf import BoletoPDF
 
 
 def list_recursively(directory, pattern):
@@ -151,7 +141,9 @@ def pdftoxml(filename, output):
 
     root = fromstring(stdout)
     indent(root)
-    open(output, 'w').write(tostring(root))
+    with open(output, 'w') as f:
+        s = tostring(root)
+        f.write(s.decode('utf-8'))
 
 
 class BoletoTestCase(unittest.TestCase):
@@ -162,8 +154,6 @@ class BoletoTestCase(unittest.TestCase):
             open(fname, 'w').write(open(generated).read())
         return fname
 
-    @skipIf(sys.version_info >= (3,),
-                     "Reportlab unavailable on this version")
     def test_pdf_triplo_rendering(self):
         bank = type(self.dados[0]).__name__
         filename = tempfile.mktemp(prefix="pyboleto-triplo-",
@@ -183,8 +173,6 @@ class BoletoTestCase(unittest.TestCase):
                 bank, diff))
         os.unlink(generated)
 
-    @skipIf(sys.version_info >= (3,),
-                     "Reportlab unavailable on this version")
     def test_pdf_rendering(self):
         dados = self.dados[0]
         bank = type(dados).__name__
