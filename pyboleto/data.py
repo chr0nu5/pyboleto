@@ -10,8 +10,12 @@
     :license: BSD, see LICENSE for more details.
 
 """
+import sys
 import datetime
 from decimal import Decimal
+
+if sys.version_info >= (3,):
+    basestring = (str, bytes)
 
 
 class BoletoException(Exception):
